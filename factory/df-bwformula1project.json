@@ -1,0 +1,9 @@
+{
+	"name": "df-bwformula1project",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "38fcfa01-7dd3-4ce0-854b-9acf51abbcdd",
+		"tenantId": "2194091a-ed52-4ee7-b46d-a7fd6a358d83"
+	}
+}
