@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df-bwformula1project"
+		},
+		"ls_adlsgen2_accountKey": {
+			"value": ""
+		},
+		"ls_adlsgen2_properties_typeProperties_url": {
+			"value": "https://bwformula1datalakegen2.dfs.core.windows.net/"
+		},
+		"ls_source_api_properties_typeProperties_url": {
+			"value": "http://ergast.com/api/f1/"
+		}
+	}
+}
