@@ -110,6 +110,176 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pl_constructors')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "act_copy_constructors",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_api",
+								"type": "DatasetReference",
+								"parameters": {
+									"ds_para_file_name": {
+										"value": "@pipeline().parameters.pl_para_constructors",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sink_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"ds_para_directory": {
+										"value": "@concat(concat(concat('bronze/',pipeline().parameters.pl_para_constructors),'/'),formatDateTime(utcnow(),'yyyy-MM-dd'))",
+										"type": "Expression"
+									},
+									"ds_para_filepath": {
+										"value": "@concat(pipeline().parameters.pl_para_constructors,'.json')",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"pl_para_constructors": {
+						"type": "string",
+						"defaultValue": "constructors"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_api')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sink_json')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_drivers')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "act_copy_drivers",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_api",
+								"type": "DatasetReference",
+								"parameters": {
+									"ds_para_file_name": {
+										"value": "@pipeline().parameters.pl_para_drivers",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_sink_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"ds_para_directory": {
+										"value": "@concat(concat(concat('bronze/',pipeline().parameters.pl_para_drivers),'/'),formatDateTime(utcnow(),'yyyy-MM-dd'))",
+										"type": "Expression"
+									},
+									"ds_para_filepath": {
+										"value": "@concat(pipeline().parameters.pl_para_drivers,'.json')",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"pl_para_drivers": {
+						"type": "string",
+						"defaultValue": "drivers"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_api')]",
+				"[concat(variables('factoryId'), '/datasets/ds_sink_json')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_season')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
