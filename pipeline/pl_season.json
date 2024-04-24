@@ -132,7 +132,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data_of_foreach",
+							"name": "Copy data_for_race",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -186,12 +186,41 @@
 											"type": "Expression"
 										},
 										"ds_para_filepath": {
-											"value": "@concat('bronze/races/',formatDateTime(utcnow(),'yyyy-MM-dd'))",
+											"value": "@concat(concat('race_',item().season),'.json')",
 											"type": "Expression"
 										}
 									}
 								}
 							]
+						},
+						{
+							"name": "Execute_child_pl",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Copy data_for_race",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pl_child",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"season_year": {
+										"value": "@item().season",
+										"type": "Expression"
+									}
+								}
+							}
 						}
 					]
 				}
